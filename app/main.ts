@@ -107,19 +107,3 @@ angular.module('app').controller('AppCtrl', AppCtrl);
 //console.log('userId: ' + ).push().key);
 let dogKey = app.database().ref().child("dogs").push().key;
 
-// for (var x = 0; x < 1000; x++) {
-//   firebase.database().ref('dogs').push({
-//     name: 'spot',
-//     breed: 'mutt'
-//   }).then(() => {
-//     console.log('dog added');
-//   });
-// }
-
-
-
-
-
-
-//  firebase.database().ref('dogs').remove();
-
