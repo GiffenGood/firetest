@@ -2,6 +2,9 @@
 /// <reference path="../node_modules/definitely-typed-angular/angular.d.ts" />
 import { config } from './config';
 
+//todo: 
+// Try to use the new async await in ts.
+
 angular.module('app', []);
 
 //Manual bootstrap angular app 
@@ -75,35 +78,4 @@ class AppCtrl {
 
 angular.module('app').controller('AppCtrl', AppCtrl);
 
-//try to do a regular import than webpack in the future
-
-
-
-
-
-// function writeUserData(userId: string, name: string, email: string, imageUrl: string) {
-//   firebase.database().ref('users/' + userId).update({
-//     username: name,
-//     email: email,
-//     profile_picture: imageUrl
-//   });
-// }
-
-
-
-// writeUserData("sally", "Sally Mae", "sally@sally.com", "https://images/sally.jpg");
-
-// app.database().ref('users/sally').on('value', (snapshot) => {
-//   if (snapshot) {
-//     var el = document.getElementById('sally');
-//     if (el) {
-//       let p = <IPerson>snapshot.val();
-//       let name = snapshot.key;
-//       el.innerText = `Name: ${p.username} Id: ${name} Email ${p.email}`;
-//     }
-//   }
-// });
-
-//console.log('userId: ' + ).push().key);
-let dogKey = app.database().ref().child("dogs").push().key;
 
