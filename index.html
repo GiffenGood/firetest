@@ -46,6 +46,16 @@
                     </button>
                 </div>
             </div>
+            <div class="row" ng-repeat="dog in main.dogs">
+                    <ul>
+                        <li>
+                            {{dog.name}}
+                        </li>
+                        <li>
+                            {{dog.breed}}
+                        </li>
+                    </ul>                    
+            </div>
         </div>
     </div>
 

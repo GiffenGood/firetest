@@ -11,10 +11,10 @@ angular.module('app', []);
 (<any>(angular.element(document))).ready(() => {
   angular.bootstrap(document.body, ['app']);
 });
-  
+
 interface IUser {
   username: string;
-  email: string;  
+  email: string;
   profile_picture: string,
   ref: string;
 }
@@ -23,12 +23,14 @@ let app = firebase.initializeApp(config);
 
 class AppCtrl {
   users: any[];
+  dogs: any[]
   title: string = "cool";
   usersRef: firebase.database.Reference;
-  newUser : IUser | null;
+  newUser: IUser | null;
 
   constructor($scope: ng.IScope) {
     this.usersRef = firebase.database().ref("users");
+    this.getDogs();
     this.usersRef.once('value', (snapshot) => {
       $scope.$apply(() => {
         this.getData(snapshot);
@@ -36,6 +38,37 @@ class AppCtrl {
     });
     this.usersRef.on('value', (snapshot) => {
       this.getData(snapshot);
+    });
+  }
+
+  private getDogs() {
+    if (this.usersRef.parent == null) return;
+    let dogRef = this.usersRef.parent.child('dogs');
+    this.dogs = []
+    dogRef.once('value', (sn) => {
+      sn.forEach((dog) => {
+        this.dogs.push(dog.val());
+        return false;
+      });
+    });
+  }
+
+  private addDogs() {
+    if (this.usersRef.parent == null) return;
+    let dogRef = this.usersRef.parent.child('dogs');
+    dogRef.push({
+      breed: 'rat terrier',
+      name: 'peeky'
+    }, (err) => {
+      console.log(err);
+    });
+    dogRef.push({
+      breed: 'pug',
+      name: 'fitzy'
+    });
+    dogRef.push({
+      breed: 'angel',
+      name: 'poodle'
     });
   }
 
@@ -60,8 +93,8 @@ class AppCtrl {
     this.usersRef.child(user.ref).update(temp);
   }
 
-  public add(user :IUser){
-    if(!this.newUser) return;
+  public add(user: IUser) {
+    if (!this.newUser) return;
     let temp = <IUser>{
       email: this.newUser.email,
       username: this.newUser.username,
