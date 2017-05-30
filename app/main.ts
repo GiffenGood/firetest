@@ -43,7 +43,7 @@ class AppCtrl {
 
   private getDogs() {
     if (this.usersRef.parent == null) return;
-    let dogRef = this.usersRef.parent.child('dogs');
+    let dogRef = this.usersRef.parent.child('dogs').orderByChild('breed');
     this.dogs = []
     dogRef.once('value', (sn) => {
       sn.forEach((dog) => {
@@ -56,31 +56,31 @@ class AppCtrl {
   private addDogs() {
     if (this.usersRef.parent == null) return;
     let dogRef = this.usersRef.parent.child('dogs');
+    // dogRef.push({
+    //   breed: 'rat terrier',
+    //   name: 'peeky'
+    // }, (err) => {
+    //   console.log(err);
+    // });
+    // dogRef.push({
+    //   breed: 'pug',
+    //   name: 'fitzy'
+    // });
     dogRef.push({
-      breed: 'rat terrier',
-      name: 'peeky'
-    }, (err) => {
-      console.log(err);
-    });
-    dogRef.push({
-      breed: 'pug',
-      name: 'fitzy'
-    });
-    dogRef.push({
-      breed: 'angel',
-      name: 'poodle'
+      breed: 'poodle',
+      name: 'angel'
     });
   }
 
   private getData(snapshot: firebase.database.DataSnapshot | null) {
     if (snapshot) {
       this.users = [];
-      let temp = snapshot.val();
-      for (var key in temp) {
-        let user: IUser = temp[key];
-        user.ref = key;
-        this.users.push(temp[key]);
-      }
+      snapshot.forEach((a)=>{
+          let user =<IUser> a.val();
+          user.ref = a.key || '';
+          this.users.push(user);
+          return false;
+      });
     }
   }
 
